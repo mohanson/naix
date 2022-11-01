@@ -11,16 +11,25 @@ import (
 	"github.com/mohanson/daze/protocol/ashe"
 )
 
-// Dahlia is an encrypted port forwarding protocol.
+// Dahlia is an encrypted port forwarding protocol. Unlike common port forwarding tools, it needs to configure a server
+// and a client, and the communication between the server and the client is encrypted to bypass firewall detection.
 
 // Dahlia implemented the dahlia protocol.
 type Dahlia struct {
 	Cipher []byte
 	Closer io.Closer
 	Listen string
-	Remote string
+	Server string
 	XI     bool
 	XO     bool
+}
+
+// Close listener. Established connections will not be closed.
+func (d *Dahlia) Close() error {
+	if d.Closer != nil {
+		return d.Closer.Close()
+	}
+	return nil
 }
 
 // Serve incoming connections. Parameter cli will be closed automatically when the function exits.
@@ -40,7 +49,7 @@ func (d *Dahlia) Serve(ctx *daze.Context, cli net.Conn) error {
 	} else {
 		a = cli
 	}
-	srv, err = daze.Dial("tcp", d.Remote)
+	srv, err = daze.Dial("tcp", d.Server)
 	if err != nil {
 		return err
 	}
@@ -54,14 +63,6 @@ func (d *Dahlia) Serve(ctx *daze.Context, cli net.Conn) error {
 		b = srv
 	}
 	daze.Link(a, b)
-	return nil
-}
-
-// Close listener. Established connections will not be closed.
-func (d *Dahlia) Close() error {
-	if d.Closer != nil {
-		return d.Closer.Close()
-	}
 	return nil
 }
 
@@ -100,10 +101,10 @@ func (d *Dahlia) Run() error {
 }
 
 // NewDahlia returns a new dahlia.
-func NewDahlia(listen string, remote string, cipher string) *Dahlia {
+func NewDahlia(listen string, server string, cipher string) *Dahlia {
 	return &Dahlia{
 		Cipher: daze.Salt(cipher),
 		Listen: listen,
-		Remote: remote,
+		Server: server,
 	}
 }
