@@ -20,13 +20,11 @@ func TestProtocolDahliaTCP(t *testing.T) {
 	defer remote.Close()
 	remote.TCP()
 
-	dazeServer := NewDahlia(DazeServerListenOn, EchoServerListenOn, Password)
-	dazeServer.XI = true
+	dazeServer := NewServer(DazeServerListenOn, EchoServerListenOn, Password)
 	defer dazeServer.Close()
 	dazeServer.Run()
 
-	dazeClient := NewDahlia(DazeClientListenOn, DazeServerListenOn, Password)
-	dazeClient.XO = true
+	dazeClient := NewClient(DazeClientListenOn, DazeServerListenOn, Password)
 	defer dazeClient.Close()
 	dazeClient.Run()
 

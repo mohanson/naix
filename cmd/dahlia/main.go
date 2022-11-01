@@ -10,19 +10,16 @@ import (
 var (
 	fListen = flag.String("l", "", "listen address")
 	fServer = flag.String("s", "", "server address")
-	fCrypto = flag.String("c", "--", "crypto")
 	fCipher = flag.String("k", "", "password")
 )
 
 func main() {
 	flag.Parse()
-	d := dahlia.NewDahlia(*fListen, *fServer, *fCipher)
-	if (*fCrypto)[0] == 'x' {
-		d.XI = true
+	switch flag.Arg(0) {
+	case "server":
+		dahlia.NewServer(*fListen, *fServer, *fCipher).Run()
+	case "client":
+		dahlia.NewClient(*fListen, *fServer, *fCipher).Run()
 	}
-	if (*fCrypto)[1] == 'x' {
-		d.XO = true
-	}
-	d.Run()
 	daze.Hang()
 }
