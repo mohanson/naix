@@ -223,7 +223,7 @@ func (m *Middle) Run() error {
 }
 
 // NewMiddle returns a new Middle.
-func NewMiddle(listen string, server string, cipher string) *Middle {
+func NewMiddle(listen string, server string) *Middle {
 	return &Middle{
 		Listen: listen,
 		Server: server,

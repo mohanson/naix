@@ -18,8 +18,12 @@ func main() {
 	switch flag.Arg(0) {
 	case "server":
 		naix.NewServer(*fListen, *fServer, *fCipher).Run()
+		daze.Hang()
 	case "client":
 		naix.NewClient(*fListen, *fServer, *fCipher).Run()
+		daze.Hang()
+	case "middle":
+		naix.NewMiddle(*fListen, *fServer).Run()
+		daze.Hang()
 	}
-	daze.Hang()
 }
