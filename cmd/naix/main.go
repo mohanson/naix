@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 
-	"github.com/mohanson/dahlia"
 	"github.com/mohanson/daze"
+	"github.com/mohanson/naix"
 )
 
 var (
@@ -17,9 +17,9 @@ func main() {
 	flag.Parse()
 	switch flag.Arg(0) {
 	case "server":
-		dahlia.NewServer(*fListen, *fServer, *fCipher).Run()
+		naix.NewServer(*fListen, *fServer, *fCipher).Run()
 	case "client":
-		dahlia.NewClient(*fListen, *fServer, *fCipher).Run()
+		naix.NewClient(*fListen, *fServer, *fCipher).Run()
 	}
 	daze.Hang()
 }

@@ -1,4 +1,4 @@
-package dahlia
+package naix
 
 import (
 	"io"
@@ -15,7 +15,7 @@ const (
 	Password           = "password"
 )
 
-func TestProtocolDahliaTCP(t *testing.T) {
+func TestProtocolNaixTCP(t *testing.T) {
 	remote := daze.NewTester(EchoServerListenOn)
 	defer remote.Close()
 	remote.TCP()

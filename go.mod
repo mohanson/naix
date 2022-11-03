@@ -1,4 +1,4 @@
-module github.com/mohanson/dahlia
+module github.com/mohanson/naix
 
 go 1.19
 

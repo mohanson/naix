@@ -1,4 +1,4 @@
-package dahlia
+package naix
 
 import (
 	"errors"
@@ -11,10 +11,10 @@ import (
 	"github.com/mohanson/daze/protocol/ashe"
 )
 
-// Dahlia is an encrypted port forwarding protocol. Unlike common port forwarding tools, it needs to configure a server
+// Naix is an encrypted port forwarding protocol. Unlike common port forwarding tools, it needs to configure a server
 // and a client, and the communication between the server and the client is encrypted to bypass firewall detection.
 
-// Server implemented the dahlia protocol.
+// Server implemented the naix protocol.
 type Server struct {
 	Cipher []byte
 	Closer io.Closer
@@ -88,7 +88,7 @@ func NewServer(listen string, server string, cipher string) *Server {
 	}
 }
 
-// Client implemented the dahlia protocol.
+// Client implemented the naix protocol.
 type Client struct {
 	Cipher []byte
 	Closer io.Closer
@@ -163,7 +163,7 @@ func NewClient(listen string, server string, cipher string) *Client {
 	}
 }
 
-// Middle implemented the dahlia protocol.
+// Middle implemented the naix protocol.
 type Middle struct {
 	Closer io.Closer
 	Listen string
